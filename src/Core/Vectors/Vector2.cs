@@ -96,4 +96,25 @@ public sealed class Vector2 : IVector2
     {
         throw new NotImplementedException();
     }
+
+    // INDEXER
+    public double this[int i]
+    {
+        get
+        {
+            if (i < 0 || i >= Dimensions)
+                throw new IndexOutOfRangeException(
+                    "Index must fall within the range of the vector's dimension."
+                );
+            return Components[i];
+        }
+        set
+        {
+            if (i < 0 || i >= Dimensions)
+                throw new IndexOutOfRangeException(
+                    "Index must fall within the range of the vector's dimension."
+                );
+            Components[i] = value;
+        }
+    }
 }

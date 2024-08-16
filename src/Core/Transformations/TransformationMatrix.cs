@@ -101,7 +101,24 @@ public class TransformationMatrix : Matrix
     /// <param name="alpha"></param>
     /// <param name="beta"></param>
     /// <param name="gamma"></param>
-    public static Matrix General3DRotation(double alpha, double beta, double gamma)
+    public static Matrix GeneralIntrinsic3DRotation(double alpha, double beta, double gamma)
+    {
+        Matrix rotationZ = RotationZ(alpha);
+        Matrix rotationY = RotationY(beta);
+        Matrix rotationX = RotationX(gamma);
+
+        return (Matrix)(rotationZ * rotationY * rotationX);
+    }
+
+    /// <summary>
+    /// Represents a rotation whose yaw, pitch and roll angles are alpha, beta
+    /// and gamma.
+    /// Represents an extrinsic rotation whose (improper) Euler angles are α, β, γ, about axes x, y, z.
+    /// </summary>
+    /// <param name="alpha"></param>
+    /// <param name="beta"></param>
+    /// <param name="gamma"></param>
+    public static Matrix GeneralExtrinsic3DRotation(double gamma, double beta, double alpha)
     {
         Matrix rotationZ = RotationZ(alpha);
         Matrix rotationY = RotationY(beta);
