@@ -2,11 +2,8 @@ namespace Zeno.Core.Transformations;
 
 using Zeno.Core.Matrices;
 
-public class TransformationMatrix : Matrix
+public static class Rotation
 {
-    public TransformationMatrix(double[,] elements)
-        : base(elements) { }
-
     // Basic 2D Rotation
     /// <summary>
     /// Performs rotation in Euclidean space of points in xy plane counterclockwise
@@ -118,11 +115,11 @@ public class TransformationMatrix : Matrix
     /// <param name="alpha"></param>
     /// <param name="beta"></param>
     /// <param name="gamma"></param>
-    public static Matrix GeneralExtrinsic3DRotation(double gamma, double beta, double alpha)
+    public static Matrix GeneralExtrinsic3DRotation(double alpha, double beta, double gamma)
     {
-        Matrix rotationZ = RotationZ(alpha);
+        Matrix rotationX = RotationX(alpha);
         Matrix rotationY = RotationY(beta);
-        Matrix rotationX = RotationX(gamma);
+        Matrix rotationZ = RotationZ(gamma);
 
         return (Matrix)(rotationZ * rotationY * rotationX);
     }
