@@ -70,6 +70,16 @@ public class Matrix
         return matrixT;
     }
 
+    public double Trace()
+    {
+        double trace = 0;
+
+        for (int i = 0; i < Rows; i++)
+            trace += _elements[i, i];
+
+        return trace;
+    }
+
     public static Matrix Identity(int size)
     {
         Matrix matrix = new(size, size);
@@ -112,6 +122,17 @@ public class Matrix
         return result;
     }
 
+    public static Matrix operator *(Matrix a, double scalar)
+    {
+        Matrix result = new(a.Rows, a.Cols);
+
+        for (int i = 0; i < a.Rows; i++)
+        for (int j = 0; j < a.Cols; j++)
+            result[i, j] = scalar * a[i, j];
+
+        return result;
+    }
+
     public static Matrix operator *(Matrix a, Matrix b)
     {
         if (!a.Shape.Equals(b.Shape))
@@ -134,7 +155,7 @@ public class Matrix
         if (matrix.Cols != vector.Dimensions)
             throw new ArgumentException("Matrix columns must match vector dimenions!");
 
-        double[] result = new double[matrix.Rows];
+        double[] result = new double[vector.Dimensions];
 
         for (int i = 0; i < matrix.Rows; i++)
         for (int j = 0; j < matrix.Cols; j++)
@@ -148,7 +169,7 @@ public class Matrix
         if (matrix.Cols != vector.Dimensions)
             throw new ArgumentException("Matrix columns must match vector dimenions!");
 
-        double[] result = new double[matrix.Rows];
+        double[] result = new double[vector.Dimensions];
 
         for (int i = 0; i < matrix.Rows; i++)
         for (int j = 0; j < matrix.Cols; j++)
@@ -162,7 +183,7 @@ public class Matrix
         if (matrix.Cols != vector.Dimensions)
             throw new ArgumentException("Matrix columns must match vector dimenions!");
 
-        double[] result = new double[matrix.Rows];
+        double[] result = new double[vector.Dimensions];
 
         for (int i = 0; i < matrix.Rows; i++)
         for (int j = 0; j < matrix.Cols; j++)
