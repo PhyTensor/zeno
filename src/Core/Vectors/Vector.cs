@@ -144,6 +144,9 @@ public sealed class Vector : IVectorN
     public static Vector operator *(double scalar, Vector a) =>
         new Vector(a.Components.Select(c => (scalar * c)).ToArray());
 
+    public static Vector operator /(double scalar, Vector a) =>
+        new Vector(a.Components.Select(c => ((1 / scalar) * c)).ToArray());
+
     // INDEXER
     public double this[int i]
     {
