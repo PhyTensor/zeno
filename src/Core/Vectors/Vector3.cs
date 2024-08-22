@@ -26,6 +26,10 @@ public sealed class Vector3 : IVector3
                 "Vector3 allows only 3 elements to compose a 3-dimensional vector!"
             );
 
+        X = components[0];
+        Y = components[1];
+        Z = components[2];
+
         _components = components ?? throw new ArgumentNullException(nameof(components));
     }
 

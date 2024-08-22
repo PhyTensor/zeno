@@ -28,6 +28,9 @@ public sealed class Vector2 : IVector2
                 "Vector2 allows only 2 elements to compose a 2-dimensional vector!"
             );
 
+        X = components[0];
+        Y = components[1];
+
         _components = components ?? throw new ArgumentNullException(nameof(components));
     }
 
