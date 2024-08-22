@@ -1,8 +1,8 @@
 namespace Zeno.Tests;
 
 using Zeno.Core.Matrices;
-using Zeno.Core.Transformations;
 using Zeno.Core.Vectors;
+using static Zeno.Core.Transformations.Rotation;
 
 public class TestMatrices
 {
@@ -151,12 +151,84 @@ public class TransformationMatrixTests
     [Fact]
     public void RotationMatrix_ShouldRotateVectorCorrectly()
     {
-        var rotationMatrix = TransformationMatrix.Rotation2(Math.PI / 2); // 90 degrees
+        Matrix rotationMatrix = Rotation2(Math.PI / 2); // 90 degrees
         var vector = new Vector(1, 0);
 
         var result = rotationMatrix * vector;
 
         Assert.Equal(0, Math.Round(result[0], 2));
         Assert.Equal(1, Math.Round(result[1], 2));
+    }
+
+    [Theory]
+    [InlineData(Math.PI / 2, 1, 0, 0, 1, 0, 0)]
+    [InlineData(Math.PI / 2, 0, 0, 1, 0, -1, 0)]
+    [InlineData(Math.PI / 2, 0, 1, 0, 0, 0, 1)]
+    [InlineData(Math.PI, 0, 1, 0, 0, -1, 0)]
+    public void RotationX_ShouldRotateVectorCorrectly(
+        double theta,
+        double ax,
+        double ay,
+        double az,
+        double bx,
+        double by,
+        double bz
+    )
+    {
+        Vector3 a = new(ax, ay, az);
+        Vector3 b = new(bx, by, bz);
+        Vector3 result = RotationX(theta) * a;
+
+        Assert.Equal(b.X, result.X, precision: 5);
+        Assert.Equal(b.Y, result.Y, precision: 5);
+        Assert.Equal(b.Z, result.Z, precision: 5);
+    }
+
+    [Theory]
+    [InlineData(Math.PI / 2, 0, 0, 1, 1, 0, 0)]
+    [InlineData(Math.PI / 2, 0, 1, 0, 0, 1, 0)]
+    [InlineData(Math.PI, 0, 0, 1, 0, 0, -1)]
+    public void RotationY_ShouldRotateVectorCorrectly(
+        double theta,
+        double ax,
+        double ay,
+        double az,
+        double bx,
+        double by,
+        double bz
+    )
+    {
+        Vector3 a = new(ax, ay, az);
+        Vector3 expected = new(bx, by, bz);
+
+        Vector3 result = RotationY(theta) * a;
+
+        Assert.Equal(expected.X, result.X, precision: 5);
+        Assert.Equal(expected.Y, result.Y, precision: 5);
+        Assert.Equal(expected.Z, result.Z, precision: 5);
+    }
+
+    [Theory]
+    [InlineData(Math.PI / 2, 0, 1, 0, -1, 0, 0)]
+    [InlineData(Math.PI / 2, 1, 0, 0, 0, 1, 0)]
+    [InlineData(Math.PI, 1, 0, 0, -1, 0, 0)]
+    public void RotationZ_ShouldRotateVectorCorrectly(
+        double theta,
+        double ax,
+        double ay,
+        double az,
+        double bx,
+        double by,
+        double bz
+    )
+    {
+        Vector3 a = new(ax, ay, az);
+        Vector3 expected = new(bx, by, bz);
+
+        Vector3 result = RotationZ(theta) * a;
+
+        Assert.Equal(expected.X, result.X, precision: 5);
+        Assert.Equal(expected.Y, result.Y, precision: 5);
+        Assert.Equal(expected.Z, result.Z, precision: 5);
     }
 }
