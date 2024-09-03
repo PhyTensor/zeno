@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Core\Zeno.Core.csproj" />
+    <ProjectReference Include="..\src\Quantum\Zeno.Quantum.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeno.Core", "src\Core\Zeno.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeno.Tests", "test\Zeno.Tests.csproj", "{0962C7E6-C640-46F7-AD54-780B0B2F6657}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeno.Quantum", "src\Quantum\Zeno.Quantum.csproj", "{775642A2-7369-4BDC-BC01-D338A3360094}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,8 +28,13 @@ Global
 		{0962C7E6-C640-46F7-AD54-780B0B2F6657}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0962C7E6-C640-46F7-AD54-780B0B2F6657}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0962C7E6-C640-46F7-AD54-780B0B2F6657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{775642A2-7369-4BDC-BC01-D338A3360094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{775642A2-7369-4BDC-BC01-D338A3360094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{775642A2-7369-4BDC-BC01-D338A3360094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{775642A2-7369-4BDC-BC01-D338A3360094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8965E248-2BCA-420C-A151-BF5074B25407} = {DB92D9BF-0B38-45C9-AF38-6493B1D4DFEA}
+		{775642A2-7369-4BDC-BC01-D338A3360094} = {DB92D9BF-0B38-45C9-AF38-6493B1D4DFEA}
 	EndGlobalSection
 EndGlobal

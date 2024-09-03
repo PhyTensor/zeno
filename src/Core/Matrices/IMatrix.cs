@@ -1,14 +1,36 @@
+using System.Numerics;
+
 namespace Zeno.Core.Matrices;
 
+/// Matrices in Real number elements
 public interface IMatrix
 {
     int Rows { get; }
-    int Columns { get; }
-    String Shape { get; }
+    int Cols { get; }
+    string Shape { get; }
+    double[,] Elements { get; set; }
+
+    double Trace();
+    Matrix Transpose();
+
+    /// <summary>
+    /// Maps the 2D array as a sequence of elements in a 1D array
+    /// </summary>
+    double[] Flatten();
 }
 
-public interface IMatrix2 : IMatrix { }
+/// Matrices with Complex number elements
+public interface ICMatrix
+{
+    int Rows { get; }
+    int Cols { get; }
+    string Shape { get; }
+    Complex[,] Elements { get; set; }
 
-public interface IMatrix3 : IMatrix { }
+    Complex Trace();
+    CMatrix Transpose();
+    CMatrix Conjugate();
 
-public interface IMatrix4 : IMatrix { }
+    /// Conjugate Transpose or Hermitian Transpose.
+    CMatrix ConjugateTranspose();
+}

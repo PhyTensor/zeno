@@ -66,6 +66,11 @@ public sealed class Vector : IVectorN
         return DotProduct(this, other);
     }
 
+    public IVector TensorProduct(IVectorN other)
+    {
+        return TensorProduct(this, other);
+    }
+
     public double NormEuclideanSquared()
     {
         return Components.Sum(c => c * c);
@@ -132,6 +137,24 @@ public sealed class Vector : IVectorN
         return Math.Acos(DotProduct(a, b) / (a.Length * b.Length));
     }
 
+    public static Vector TensorProduct(IVectorN a, IVectorN b)
+    {
+        int dim = a.Dimensions * b.Dimensions;
+        Vector result = new(dim);
+
+        int index = 0;
+        for (int i = 0; i < a.Dimensions; i++)
+        {
+            for (int j = 0; j < b.Dimensions; j++)
+            {
+                result[index] = a[i] * b[j];
+                index += 1;
+            }
+        }
+
+        return result;
+    }
+
     // OPERATOR OVERLOADS
     public static Vector operator +(Vector a, Vector b) => Addition(a, b);
 
@@ -146,6 +169,8 @@ public sealed class Vector : IVectorN
 
     public static Vector operator /(double scalar, Vector a) =>
         new Vector(a.Components.Select(c => ((1 / scalar) * c)).ToArray());
+
+    public static Vector operator *(Vector a, Vector b) => TensorProduct(a, b);
 
     // INDEXER
     public double this[int i]

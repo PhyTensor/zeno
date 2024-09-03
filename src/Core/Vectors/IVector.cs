@@ -5,6 +5,8 @@ namespace Zeno.Core.Vectors;
 /// </summary>
 public interface IVector
 {
+    double this[int i] { get; set; }
+
     /// <summary>
     /// Gets the dimension of the vector/the number of components
     /// </summary>
@@ -68,4 +70,7 @@ public interface IVectorN : IVector
 
     /// L_infinity/Max Norm. Defined as the absolute value of the largest component of the vector
     double NormMax();
+
+    /// Tensor Product
+    IVectorN TensorProduct();
 }
