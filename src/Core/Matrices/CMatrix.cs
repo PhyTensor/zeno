@@ -115,6 +115,16 @@ public class CMatrix : ICMatrix
         return matrix;
     }
 
+    public bool IsHermitian()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsUnitary()
+    {
+        throw new NotImplementedException();
+    }
+
     public static CMatrix operator +(CMatrix a, CMatrix b)
     {
         if (!a.Shape.Equals(b.Shape))
@@ -175,6 +185,17 @@ public class CMatrix : ICMatrix
         for (int i = 0; i < a.Rows; i++)
         for (int j = 0; j < a.Cols; j++)
             result[i, j] = Complex.Subtract(a[i, j], b[i, j]);
+
+        return result;
+    }
+
+    public static CMatrix operator *(CMatrix a, double scalar)
+    {
+        CMatrix result = new(a.Rows, a.Cols);
+
+        for (int i = 0; i < a.Rows; i++)
+        for (int j = 0; j < a.Cols; j++)
+            result[i, j] = scalar * a[i, j];
 
         return result;
     }

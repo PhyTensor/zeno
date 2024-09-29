@@ -95,6 +95,8 @@ public class Matrix : IMatrix
         return matrix;
     }
 
+    /// <summary>
+    /// </summary>
     public static Matrix KroneckerProduct(Matrix a, Matrix b)
     {
         int newRows = b.Rows * a.Rows;

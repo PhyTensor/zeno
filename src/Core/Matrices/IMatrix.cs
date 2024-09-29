@@ -33,4 +33,7 @@ public interface ICMatrix
 
     /// Conjugate Transpose or Hermitian Transpose.
     CMatrix ConjugateTranspose();
+
+    bool IsHermitian();
+    bool IsUnitary();
 }
