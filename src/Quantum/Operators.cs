@@ -13,6 +13,17 @@ public static class Operators
     private static readonly Complex i = Complex.ImaginaryOne;
     private static readonly double InvSqrtTwo = 1.0 / Math.Sqrt(2);
 
+    public static CMatrix Identity()
+    {
+        return new CMatrix(
+            new Complex[,]
+            {
+                { 1, 0 },
+                { 0, 1 }
+            }
+        );
+    }
+
     public static CMatrix PauliX()
     {
         return new CMatrix(
@@ -55,5 +66,49 @@ public static class Operators
                     { 1, -1 }
                 }
             ) * InvSqrtTwo;
+    }
+
+    public static CMatrix S()
+    {
+        return new CMatrix(
+            new Complex[,]
+            {
+                { 1, 0 },
+                { 0, i }
+            }
+        );
+    }
+
+    public static CMatrix SDagger()
+    {
+        return new CMatrix(
+            new Complex[,]
+            {
+                { 1, 0 },
+                { 0, i }
+            }
+        ).ConjugateTranspose();
+    }
+
+    public static CMatrix T()
+    {
+        return new CMatrix(
+            new Complex[,]
+            {
+                { 1, 0 },
+                { 0, Complex.Exp(i * Math.PI * 0.25) }
+            }
+        );
+    }
+
+    public static CMatrix TDagger()
+    {
+        return new CMatrix(
+            new Complex[,]
+            {
+                { 1, 0 },
+                { 0, Complex.Exp(i * Math.PI * 0.25) }
+            }
+        ).ConjugateTranspose();
     }
 }

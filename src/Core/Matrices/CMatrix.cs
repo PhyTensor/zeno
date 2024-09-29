@@ -77,6 +77,9 @@ public class CMatrix : ICMatrix
         return new Complex(real, imaginary);
     }
 
+    /// <summary>
+    /// Tranpose operation
+    /// </summary>
     public CMatrix Transpose()
     {
         CMatrix matrixT = new(Cols, Rows);
@@ -88,6 +91,9 @@ public class CMatrix : ICMatrix
         return matrixT;
     }
 
+    /// <summary>
+    /// Complex conjugation operation
+    /// </summary>
     public CMatrix Conjugate()
     {
         CMatrix matrix = new(Rows, Cols);
@@ -99,6 +105,9 @@ public class CMatrix : ICMatrix
         return matrix;
     }
 
+    /// <summary>
+    /// COnjugate Tranpose operation
+    /// </summary>
     public CMatrix ConjugateTranspose()
     {
         CMatrix matrix = Conjugate();
