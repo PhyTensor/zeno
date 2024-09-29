@@ -58,19 +58,34 @@ public interface IVector3 : IVector
 
 public interface IVectorN : IVector
 {
-    /// Defined as the sum of the absolute values of the comonents of a given vector.
-    /// ||x|| = |x1| + |x2|
+    /// <summary>
+    /// L2 = Euclidean distance
+    /// Defined as the root of the sum of the squares of the components of the vector.
+    /// ||x||^2 = sqrt( |x1|^2 + |x2|^2 )
+    /// </summary>
     double NormEuclidean();
 
+    /// <summary>
     /// ||x||^2 = |x1|^2 + |x2|^2
+    /// </summary>
     double NormEuclideanSquared();
 
-    /// Defined as the root of the sum of the squares of the components of the vector.
+    /// <summary>
+    /// L1 = Manhattan distance
+    /// Defined as the sum of the absolute values of the comonents of a given vector.
+    /// ||x|| = |x1| + |x2|
+    /// </summary>
     double NormManhattan();
 
+    /// <summary>
     /// L_infinity/Max Norm. Defined as the absolute value of the largest component of the vector
+    /// </summary>
     double NormMax();
 
+    double AngleBetween(IVectorN other);
+
+    double Dot(IVectorN other);
+
     /// Tensor Product
-    IVectorN TensorProduct();
+    IVector TensorProduct(IVectorN other);
 }

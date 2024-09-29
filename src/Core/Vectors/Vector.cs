@@ -12,10 +12,7 @@ public sealed class Vector : IVectorN
     public Vector(int dimensions)
     {
         if (dimensions <= 0)
-            throw new ArgumentException(
-                "Dimensions must be greater than zero.",
-                nameof(dimensions)
-            );
+            throw new ArgumentException("Dimensions must be greater than zero", nameof(dimensions));
 
         _components = new double[dimensions];
     }
@@ -23,6 +20,27 @@ public sealed class Vector : IVectorN
     public Vector(Vector vector)
     {
         _components = (double[])vector.Components.Clone();
+    }
+
+    // INDEXER
+    public double this[int i]
+    {
+        get
+        {
+            if (i < 0 || i >= Dimensions)
+                throw new IndexOutOfRangeException(
+                    "Index must fall within the range of the vector's dimension."
+                );
+            return Components[i];
+        }
+        set
+        {
+            if (i < 0 || i >= Dimensions)
+                throw new IndexOutOfRangeException(
+                    "Index must fall within the range of the vector's dimension."
+                );
+            Components[i] = value;
+        }
     }
 
     public int Dimensions => Components.Length;
@@ -51,57 +69,54 @@ public sealed class Vector : IVectorN
         return new Vector(Components.Select(c => (c / len)).ToArray());
     }
 
-    public IVector Reverse()
-    {
-        return new Vector(Components.Select(c => -c).ToArray());
-    }
+    public IVector Reverse() => new Vector(Components.Select(c => -c).ToArray());
 
-    public IVector Scale(double scalar)
-    {
-        return new Vector(Components.Select(c => (scalar * c)).ToArray());
-    }
+    public IVector Scale(double scalar) =>
+        new Vector(Components.Select(c => (scalar * c)).ToArray());
 
-    public double Dot(IVectorN other)
-    {
-        return DotProduct(this, other);
-    }
+    public double Dot(IVectorN other) => DotProduct(this, other);
 
-    public IVector TensorProduct(IVectorN other)
-    {
-        return TensorProduct(this, other);
-    }
+    public IVector TensorProduct(IVectorN other) => TensorProduct(this, other);
 
-    public double NormEuclideanSquared()
-    {
-        return Components.Sum(c => c * c);
-    }
+    public double NormEuclideanSquared() => Components.Sum(c => c * c);
 
-    public double NormEuclidean()
-    {
-        return Math.Sqrt(NormEuclideanSquared());
-    }
+    public double NormEuclidean() => Math.Sqrt(NormEuclideanSquared());
 
-    public double NormManhattan()
-    {
-        return Components.Sum(c => Math.Abs(c));
-    }
+    public double NormManhattan() => Components.Sum(c => Math.Abs(c));
 
-    public double NormMax()
-    {
-        return Components.Max();
-    }
+    public double NormMax() => Components.Max();
 
-    public double AngleBetween(IVectorN other)
-    {
-        return AngleBetween(this, other);
-    }
+    public double AngleBetween(IVectorN other) => AngleBetween(this, other);
 
-    public IVector Rotate(double radians)
-    {
-        throw new NotImplementedException();
-    }
+    public IVector Rotate(double radians) => throw new NotImplementedException();
 
     // STATIC METHODS
+
+    /// <summary>
+    /// Creates a composite quantum mechanical system.
+    /// The state space of a composite physical system us the tensor product of the state spaces of the component physical system.
+    /// </summary>
+    public static Vector TensorProduct(IVectorN a, IVectorN b)
+    {
+        int dim = a.Dimensions * b.Dimensions;
+        Vector result = new(dim);
+
+        int index = 0;
+        for (int i = 0; i < a.Dimensions; i++)
+        {
+            for (int j = 0; j < b.Dimensions; j++)
+            {
+                result[index] = a[i] * b[j];
+                index += 1;
+            }
+        }
+
+        return result;
+    }
+
+    public static double AngleBetween(IVectorN a, IVectorN b) =>
+        Math.Acos(DotProduct(a, b) / (a.Length * b.Length));
+
     public static Vector Addition(IVectorN a, IVectorN b)
     {
         if (a.Dimensions != b.Dimensions)
@@ -132,29 +147,6 @@ public sealed class Vector : IVectorN
         return a.Components.Zip(b.Components, (c1, c2) => c1 * c2).Sum();
     }
 
-    public static double AngleBetween(IVectorN a, IVectorN b)
-    {
-        return Math.Acos(DotProduct(a, b) / (a.Length * b.Length));
-    }
-
-    public static Vector TensorProduct(IVectorN a, IVectorN b)
-    {
-        int dim = a.Dimensions * b.Dimensions;
-        Vector result = new(dim);
-
-        int index = 0;
-        for (int i = 0; i < a.Dimensions; i++)
-        {
-            for (int j = 0; j < b.Dimensions; j++)
-            {
-                result[index] = a[i] * b[j];
-                index += 1;
-            }
-        }
-
-        return result;
-    }
-
     // OPERATOR OVERLOADS
     public static Vector operator +(Vector a, Vector b) => Addition(a, b);
 
@@ -171,25 +163,4 @@ public sealed class Vector : IVectorN
         new Vector(a.Components.Select(c => ((1 / scalar) * c)).ToArray());
 
     public static Vector operator *(Vector a, Vector b) => TensorProduct(a, b);
-
-    // INDEXER
-    public double this[int i]
-    {
-        get
-        {
-            if (i < 0 || i >= Dimensions)
-                throw new IndexOutOfRangeException(
-                    "Index must fall within the range of the vector's dimension."
-                );
-            return Components[i];
-        }
-        set
-        {
-            if (i < 0 || i >= Dimensions)
-                throw new IndexOutOfRangeException(
-                    "Index must fall within the range of the vector's dimension."
-                );
-            Components[i] = value;
-        }
-    }
 }

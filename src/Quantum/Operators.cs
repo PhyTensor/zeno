@@ -3,15 +3,20 @@ using Zeno.Core.Matrices;
 
 namespace Zeno.Quantum;
 
+/// <summary>
+/// The evolution os an isolated quantum system is completely descrubed by a unitary operator.
+/// A complex square matric U \in \mathcal{C}^{2x2} is unitary if and only if its inverse is the same as its
+// Hermitian transpose, i.e. U^{-1} = U^\dagger.
+/// </summary>
 public static class Operators
 {
     private static readonly Complex i = Complex.ImaginaryOne;
     private static readonly double InvSqrtTwo = 1.0 / Math.Sqrt(2);
 
-    public static Matrix PauliX()
+    public static CMatrix PauliX()
     {
-        return new Matrix(
-            new double[,]
+        return new CMatrix(
+            new Complex[,]
             {
                 { 0, 1 },
                 { 1, 0 }
@@ -19,10 +24,10 @@ public static class Operators
         );
     }
 
-    public static Matrix PauliZ()
+    public static CMatrix PauliZ()
     {
-        return new Matrix(
-            new double[,]
+        return new CMatrix(
+            new Complex[,]
             {
                 { 1, 0 },
                 { 0, -1 }
@@ -41,10 +46,10 @@ public static class Operators
         );
     }
 
-    public static Matrix Hadamard()
+    public static CMatrix Hadamard()
     {
-        return new Matrix(
-                new double[,]
+        return new CMatrix(
+                new Complex[,]
                 {
                     { 1, 1 },
                     { 1, -1 }
