@@ -1,8 +1,12 @@
 namespace Zeno.Core.Vectors;
 
 /// <summary>
-/// Represents a 2D (2-dimensional) Vector
-/// <summary>
+/// A 2D vector in a real 2D vector space, using floating-point numbers
+/// A 2-element structure that can be used to represent 2D coordinates or any other
+/// pair of numeric values.
+///
+/// See `CVector2` for its complex vector space counterpart
+/// </summary>
 public sealed class Vector2 : IVector2
 {
     private double[] _components;

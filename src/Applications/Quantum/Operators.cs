@@ -19,7 +19,7 @@ public static class Operators
             new Complex[,]
             {
                 { 1, 0 },
-                { 0, 1 }
+                { 0, 1 },
             }
         );
     }
@@ -30,7 +30,7 @@ public static class Operators
             new Complex[,]
             {
                 { 0, 1 },
-                { 1, 0 }
+                { 1, 0 },
             }
         );
     }
@@ -41,7 +41,7 @@ public static class Operators
             new Complex[,]
             {
                 { 1, 0 },
-                { 0, -1 }
+                { 0, -1 },
             }
         );
     }
@@ -52,7 +52,7 @@ public static class Operators
             new Complex[,]
             {
                 { 0, -i },
-                { i, 0 }
+                { i, 0 },
             }
         );
     }
@@ -63,7 +63,7 @@ public static class Operators
                 new Complex[,]
                 {
                     { 1, 1 },
-                    { 1, -1 }
+                    { 1, -1 },
                 }
             ) * InvSqrtTwo;
     }
@@ -74,7 +74,7 @@ public static class Operators
             new Complex[,]
             {
                 { 1, 0 },
-                { 0, i }
+                { 0, i },
             }
         );
     }
@@ -85,7 +85,7 @@ public static class Operators
             new Complex[,]
             {
                 { 1, 0 },
-                { 0, i }
+                { 0, i },
             }
         ).ConjugateTranspose();
     }
@@ -96,7 +96,7 @@ public static class Operators
             new Complex[,]
             {
                 { 1, 0 },
-                { 0, Complex.Exp(i * Math.PI * 0.25) }
+                { 0, Complex.Exp(i * Math.PI * 0.25) },
             }
         );
     }
@@ -107,8 +107,13 @@ public static class Operators
             new Complex[,]
             {
                 { 1, 0 },
-                { 0, Complex.Exp(i * Math.PI * 0.25) }
+                { 0, Complex.Exp(i * Math.PI * 0.25) },
             }
         ).ConjugateTranspose();
     }
+
+    /// <summary>
+    /// Method to generate multi-qubit gates using tensor products (Kronecker prodict)
+    /// </summary>
+    public static CMatrix GenerateGate(string gate, int numQubits, int qubit1, int qubit2 = -1) { }
 }

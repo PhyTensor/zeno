@@ -97,6 +97,20 @@ public class Matrix : IMatrix
 
     /// <summary>
     /// </summary>
+
+    // create a static method to calculate the Kronecker product of two matrices
+    // the Kronecker product is a matrix that is the product of two matrices
+    // where the number of rows and columns of the resulting matrix is the product of the number of rows and columns of the two input matrices
+    // for example, if A is a 2x2 matrix and B is a 3x3 matrix, then the Kronecker product of A and B is a 6x9 matrix
+    // the Kronecker product of two matrices is calculated by taking the dot product of each row of the first matrix with each column of the second matrix
+    // this is done by multiplying each element of the first matrix with each element of the second matrix and summing the results
+    // the resulting matrix is then reshaped to have the same number of rows and columns as the original matrices
+    // for example, if A is a 2x2 matrix and B is a 3x3 matrix, then the Kronecker product of A and B is a 6x9 matrix
+    // the Kronecker product of two matrices is calculated by taking the dot product of each row of the first matrix with each column of the second matrix
+    // this is done by multiplying each element of the first matrix with each element of the second matrix and summing the results
+    // the resulting matrix is then reshaped to have the same number of rows and columns as the original matrices
+
+
     public static Matrix KroneckerProduct(Matrix a, Matrix b)
     {
         int newRows = b.Rows * a.Rows;
