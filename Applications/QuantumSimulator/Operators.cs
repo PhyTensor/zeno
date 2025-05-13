@@ -1,7 +1,7 @@
 using System.Numerics;
-using Zeno.Core.Matrices;
+using Lib.Matrices;
 
-namespace Zeno.Quantum;
+namespace QuantumSimulator;
 
 /// <summary>
 /// The evolution os an isolated quantum system is completely descrubed by a unitary operator.
@@ -11,7 +11,7 @@ namespace Zeno.Quantum;
 public static class Operators
 {
     private static readonly Complex i = Complex.ImaginaryOne;
-    private static readonly double InvSqrtTwo = 1.0 / Math.Sqrt(2);
+    private static readonly double InverseSqrtTwo = 1.0 / Math.Sqrt(2);
 
     public static CMatrix Identity()
     {
@@ -65,7 +65,7 @@ public static class Operators
                     { 1, 1 },
                     { 1, -1 },
                 }
-            ) * InvSqrtTwo;
+            ) * InverseSqrtTwo;
     }
 
     public static CMatrix S()
@@ -81,13 +81,7 @@ public static class Operators
 
     public static CMatrix SDagger()
     {
-        return new CMatrix(
-            new Complex[,]
-            {
-                { 1, 0 },
-                { 0, i },
-            }
-        ).ConjugateTranspose();
+        return S().ConjugateTranspose();
     }
 
     public static CMatrix T()
@@ -103,17 +97,11 @@ public static class Operators
 
     public static CMatrix TDagger()
     {
-        return new CMatrix(
-            new Complex[,]
-            {
-                { 1, 0 },
-                { 0, Complex.Exp(i * Math.PI * 0.25) },
-            }
-        ).ConjugateTranspose();
+        return T().ConjugateTranspose();
     }
 
     /// <summary>
     /// Method to generate multi-qubit gates using tensor products (Kronecker prodict)
     /// </summary>
-    public static CMatrix GenerateGate(string gate, int numQubits, int qubit1, int qubit2 = -1) { }
+    // public static CMatrix GenerateGate(string gate, int numQubits, int qubit1, int qubit2 = -1) { }
 }
