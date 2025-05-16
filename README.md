@@ -4,6 +4,35 @@ Linear Algebra library
 
 ## Vectors
 
+Complex valued vectors
+
+```csharp
+public interface ICVector
+{
+    Complex this[int i] { get; set; }
+
+    Complex[] Components { get; set; }
+    int Dimensions { get; }
+    double Length { get; }
+    double LengthSquared { get; }
+    CVector Unit { get; }
+
+    double AngleBetween(CVector other);
+    CVector Conjugate();
+    Complex Dot(CVector other);
+    CVector Normalize();
+    double NormEuclidean();
+    double NormEuclideanSquared();
+    double NormManhattan();
+    CVector Reverse();
+    CVector Rotate(double radians);
+    CVector Scale(double scalar);
+    CVector TensorProduct(CVector other);
+}
+```
+
+Real valued vectors
+
 ```csharp
 public interface IVector
 {
