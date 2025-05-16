@@ -4,9 +4,11 @@ using Lib.Matrices;
 namespace QuantumSimulator;
 
 /// <summary>
+/// Contains standard quantum gates
+///
 /// The evolution os an isolated quantum system is completely descrubed by a unitary operator.
 /// A complex square matric U \in \mathcal{C}^{2x2} is unitary if and only if its inverse is the same as its
-// Hermitian transpose, i.e. U^{-1} = U^\dagger.
+/// Hermitian transpose, i.e. U^{-1} = U^\dagger.
 /// </summary>
 public static class Operators
 {
@@ -98,6 +100,19 @@ public static class Operators
     public static CMatrix TDagger()
     {
         return T().ConjugateTranspose();
+    }
+
+    public static CMatrix CNOT()
+    {
+        return new CMatrix(
+            new Complex[,]
+            {
+            { 1, 0, 0, 0 },
+            { 0, 1, 0, 0 },
+            { 0, 0, 0, 1 },
+            { 0, 0, 1, 0 }
+            }
+        );
     }
 
     /// <summary>

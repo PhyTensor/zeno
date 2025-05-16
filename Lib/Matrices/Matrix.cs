@@ -238,31 +238,31 @@ public class Matrix
         return new Vector(result);
     }
 
-    // public static Vector3 operator *(Matrix matrix, Vector3 vector)
-    // {
-    //     if (matrix.Cols != vector.Dimensions)
-    //         throw new ArgumentException("Matrix columns must match vector dimenions!");
-    //
-    //     double[] result = new double[vector.Dimensions];
-    //
-    //     for (int i = 0; i < matrix.Rows; i++)
-    //         for (int j = 0; j < matrix.Cols; j++)
-    //             result[i] += matrix[i, j] * vector[j];
-    //
-    //     return new Vector3(result);
-    // }
+    public static Vector3 operator *(Matrix matrix, Vector3 vector)
+    {
+        if (matrix.Cols != vector.Dimensions)
+            throw new ArgumentException("Matrix columns must match vector dimenions!");
 
-    // public static Vector2 operator *(Matrix matrix, Vector2 vector)
-    // {
-    //     if (matrix.Cols != vector.Dimensions)
-    //         throw new ArgumentException("Matrix columns must match vector dimenions!");
-    //
-    //     double[] result = new double[vector.Dimensions];
-    //
-    //     for (int i = 0; i < matrix.Rows; i++)
-    //         for (int j = 0; j < matrix.Cols; j++)
-    //             result[i] += matrix[i, j] * vector[j];
-    //
-    //     return new Vector2(result);
-    // }
+        double[] result = new double[vector.Dimensions];
+
+        for (int i = 0; i < matrix.Rows; i++)
+            for (int j = 0; j < matrix.Cols; j++)
+                result[i] += matrix[i, j] * vector[j];
+
+        return new Vector3(result);
+    }
+
+    public static Vector2 operator *(Matrix matrix, Vector2 vector)
+    {
+        if (matrix.Cols != vector.Dimensions)
+            throw new ArgumentException("Matrix columns must match vector dimenions!");
+
+        double[] result = new double[vector.Dimensions];
+
+        for (int i = 0; i < matrix.Rows; i++)
+            for (int j = 0; j < matrix.Cols; j++)
+                result[i] += matrix[i, j] * vector[j];
+
+        return new Vector2(result);
+    }
 }
