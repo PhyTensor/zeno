@@ -21,7 +21,6 @@ public class CMatrix
     {
         Rows = elements.GetLength(0);
         Cols = elements.GetLength(1);
-
         _elements = (Complex[,])elements.Clone();
     }
 
@@ -65,9 +64,10 @@ public class CMatrix
 
     public Complex Trace()
     {
-        double real = 0,
-            imaginary = 0;
+        if (!isSquare())
+            throw new ArgumentException("Matrix must be a square matrix to compute!");
 
+        double real = 0, imaginary = 0;
         for (int i = 0; i < Rows; i++)
         {
             real += _elements[i, i].Real;
@@ -106,11 +106,36 @@ public class CMatrix
     }
 
     /// <summary>
-    /// COnjugate Tranpose operation
+    /// Conjugate Tranpose operation
     /// </summary>
     public CMatrix ConjugateTranspose()
     {
-        return new CMatrix(_elements).Conjugate().Transpose();
+        return this.Conjugate().Transpose();
+    }
+
+    public CMatrix TensorProduct(CMatrix matrix)
+    {
+        return KroneckerProduct(this, matrix);
+    }
+
+    public Complex[] Flatten()
+    {
+        return _elements.Cast<Complex>().ToArray();
+    }
+
+    public bool isSquare()
+    {
+        if (Rows != Cols) return false; else return true;
+    }
+
+    public bool IsHermitian()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsUnitary()
+    {
+        throw new NotImplementedException();
     }
 
     public static CMatrix Identity(int size)
@@ -123,14 +148,19 @@ public class CMatrix
         return matrix;
     }
 
-    public bool IsHermitian()
+    public static CMatrix KroneckerProduct(CMatrix a, CMatrix b)
     {
-        throw new NotImplementedException();
-    }
+        int newRows = b.Rows * a.Rows;
+        int newCols = b.Cols * a.Cols;
+        CMatrix result = new(newRows, newCols);
 
-    public bool IsUnitary()
-    {
-        throw new NotImplementedException();
+        for (int am = 0; am < a.Rows; am++)
+            for (int an = 0; an < a.Cols; an++)
+                for (int bm = 0; bm < b.Rows; bm++)
+                    for (int bn = 0; bn < b.Cols; bn++)
+                        result[am * b.Rows + bm, an * b.Cols + bn] = a[am, an] * b[bm, bn];
+
+        return result;
     }
 
     public static CMatrix operator +(CMatrix a, CMatrix b)
