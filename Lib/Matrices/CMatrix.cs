@@ -1,8 +1,9 @@
 using System.Numerics;
+using Lib.Vectors;
 
-namespace Zeno.Core.Matrices;
+namespace Lib.Matrices;
 
-public class CMatrix : ICMatrix
+public class CMatrix
 {
     private Complex[,] _elements;
 
@@ -21,7 +22,6 @@ public class CMatrix : ICMatrix
     {
         Rows = elements.GetLength(0);
         Cols = elements.GetLength(1);
-
         _elements = (Complex[,])elements.Clone();
     }
 
@@ -65,9 +65,10 @@ public class CMatrix : ICMatrix
 
     public Complex Trace()
     {
-        double real = 0,
-            imaginary = 0;
+        if (!isSquare())
+            throw new ArgumentException("Matrix must be a square matrix to compute!");
 
+        double real = 0, imaginary = 0;
         for (int i = 0; i < Rows; i++)
         {
             real += _elements[i, i].Real;
@@ -85,8 +86,8 @@ public class CMatrix : ICMatrix
         CMatrix matrixT = new(Cols, Rows);
 
         for (int i = 0; i < Rows; i++)
-        for (int j = 0; j < Cols; j++)
-            matrixT[j, i] = _elements[i, j];
+            for (int j = 0; j < Cols; j++)
+                matrixT[j, i] = _elements[i, j];
 
         return matrixT;
     }
@@ -99,29 +100,33 @@ public class CMatrix : ICMatrix
         CMatrix matrix = new(Rows, Cols);
 
         for (int i = 0; i < Rows; i++)
-        for (int j = 0; j < Cols; j++)
-            matrix[i, j] = Complex.Conjugate(_elements[i, j]);
+            for (int j = 0; j < Cols; j++)
+                matrix[i, j] = Complex.Conjugate(_elements[i, j]);
 
         return matrix;
     }
 
     /// <summary>
-    /// COnjugate Tranpose operation
+    /// Conjugate Tranpose operation
     /// </summary>
     public CMatrix ConjugateTranspose()
     {
-        CMatrix matrix = Conjugate();
-        return matrix.Transpose();
+        return this.Conjugate().Transpose();
     }
 
-    public static CMatrix Identity(int size)
+    public CMatrix TensorProduct(CMatrix matrix)
     {
-        CMatrix matrix = new(size, size);
+        return KroneckerProduct(this, matrix);
+    }
 
-        for (int i = 0; i < size; i++)
-            matrix[i, i] = Complex.One;
+    public Complex[] Flatten()
+    {
+        return _elements.Cast<Complex>().ToArray();
+    }
 
-        return matrix;
+    public bool isSquare()
+    {
+        if (Rows != Cols) return false; else return true;
     }
 
     public bool IsHermitian()
@@ -134,6 +139,31 @@ public class CMatrix : ICMatrix
         throw new NotImplementedException();
     }
 
+    public static CMatrix Identity(int size)
+    {
+        CMatrix matrix = new(size, size);
+
+        for (int i = 0; i < size; i++)
+            matrix[i, i] = Complex.One;
+
+        return matrix;
+    }
+
+    public static CMatrix KroneckerProduct(CMatrix a, CMatrix b)
+    {
+        int newRows = b.Rows * a.Rows;
+        int newCols = b.Cols * a.Cols;
+        CMatrix result = new(newRows, newCols);
+
+        for (int am = 0; am < a.Rows; am++)
+            for (int an = 0; an < a.Cols; an++)
+                for (int bm = 0; bm < b.Rows; bm++)
+                    for (int bn = 0; bn < b.Cols; bn++)
+                        result[am * b.Rows + bm, an * b.Cols + bn] = a[am, an] * b[bm, bn];
+
+        return result;
+    }
+
     public static CMatrix operator +(CMatrix a, CMatrix b)
     {
         if (!a.Shape.Equals(b.Shape))
@@ -144,8 +174,8 @@ public class CMatrix : ICMatrix
         CMatrix result = new(a.Rows, a.Cols);
 
         for (int i = 0; i < a.Rows; i++)
-        for (int j = 0; j < a.Cols; j++)
-            result[i, j] = Complex.Add(a[i, j], b[i, j]);
+            for (int j = 0; j < a.Cols; j++)
+                result[i, j] = Complex.Add(a[i, j], b[i, j]);
 
         return result;
     }
@@ -160,8 +190,8 @@ public class CMatrix : ICMatrix
         CMatrix result = new(a.Rows, a.Cols);
 
         for (int i = 0; i < a.Rows; i++)
-        for (int j = 0; j < a.Cols; j++)
-            result[i, j] = Complex.Add(a[i, j], b[i, j]);
+            for (int j = 0; j < a.Cols; j++)
+                result[i, j] = Complex.Add(a[i, j], b[i, j]);
 
         return result;
     }
@@ -176,8 +206,8 @@ public class CMatrix : ICMatrix
         CMatrix result = new(a.Rows, a.Cols);
 
         for (int i = 0; i < a.Rows; i++)
-        for (int j = 0; j < a.Cols; j++)
-            result[i, j] = Complex.Subtract(a[i, j], b[i, j]);
+            for (int j = 0; j < a.Cols; j++)
+                result[i, j] = Complex.Subtract(a[i, j], b[i, j]);
 
         return result;
     }
@@ -192,8 +222,8 @@ public class CMatrix : ICMatrix
         CMatrix result = new(a.Rows, a.Cols);
 
         for (int i = 0; i < a.Rows; i++)
-        for (int j = 0; j < a.Cols; j++)
-            result[i, j] = Complex.Subtract(a[i, j], b[i, j]);
+            for (int j = 0; j < a.Cols; j++)
+                result[i, j] = Complex.Subtract(a[i, j], b[i, j]);
 
         return result;
     }
@@ -203,8 +233,8 @@ public class CMatrix : ICMatrix
         CMatrix result = new(a.Rows, a.Cols);
 
         for (int i = 0; i < a.Rows; i++)
-        for (int j = 0; j < a.Cols; j++)
-            result[i, j] = scalar * a[i, j];
+            for (int j = 0; j < a.Cols; j++)
+                result[i, j] = scalar * a[i, j];
 
         return result;
     }
@@ -219,9 +249,9 @@ public class CMatrix : ICMatrix
         CMatrix result = new(a.Rows, a.Cols);
 
         for (int i = 0; i < a.Rows; i++)
-        for (int j = 0; j < a.Cols; j++)
-        for (int k = 0; k < a.Cols; k++)
-            result[i, j] += Complex.Multiply(a[i, k], b[k, j]);
+            for (int j = 0; j < a.Cols; j++)
+                for (int k = 0; k < a.Cols; k++)
+                    result[i, j] += Complex.Multiply(a[i, k], b[k, j]);
 
         return result;
     }
@@ -236,10 +266,30 @@ public class CMatrix : ICMatrix
         CMatrix result = new(a.Rows, a.Cols);
 
         for (int i = 0; i < a.Rows; i++)
-        for (int j = 0; j < a.Cols; j++)
-        for (int k = 0; k < a.Cols; k++)
-            result[i, j] += Complex.Multiply(a[i, k], b[k, j]);
+            for (int j = 0; j < a.Cols; j++)
+                for (int k = 0; k < a.Cols; k++)
+                    result[i, j] += Complex.Multiply(a[i, k], b[k, j]);
 
         return result;
+    }
+
+    public static CVector operator *(CMatrix matrix, CVector vector)
+    {
+        if (matrix.Cols != vector.Dimensions)
+            throw new ArgumentException("Matrix columns must match vector dimenions!");
+
+        Complex[] result = new Complex[vector.Dimensions];
+
+        for (int i = 0; i < matrix.Rows; i++)
+        {
+            for (int j = 0; j < matrix.Cols; j++)
+            {
+                // result[i] += matrix[i, j] * vector[j];
+                Complex product = Complex.Multiply(vector[j], matrix[i, j]);
+                result[i] = Complex.Add(result[i], product);
+            }
+        }
+
+        return new CVector(result);
     }
 }

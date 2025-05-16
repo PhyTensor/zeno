@@ -1,6 +1,6 @@
-namespace Zeno.Core.Transformations;
+using Lib.Matrices;
 
-using Zeno.Core.Matrices;
+namespace Lib.Transformations;
 
 public static class Rotation
 {

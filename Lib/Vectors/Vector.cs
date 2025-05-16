@@ -1,6 +1,9 @@
-namespace Zeno.Core.Vectors;
+namespace Lib.Vectors;
 
-public sealed class Vector : IVectorN
+/// <summary>
+/// n-dimensional (real-valued) Vector
+/// </summary>
+public sealed class Vector
 {
     private double[] _components;
 
@@ -43,52 +46,83 @@ public sealed class Vector : IVectorN
         }
     }
 
-    public int Dimensions => Components.Length;
-
-    /*public double Length => Math.Sqrt(LenghtSquared);*/
-    public double Length => NormEuclidean();
-
-    /*public double LenghtSquared => _components.Sum(c => c * c);*/
-    public double LengthSquared => NormEuclideanSquared();
-
+    /// <summary>
+    /// Gets the Components of the vector
+    /// </summary>
     public double[] Components
     {
         get => _components;
         set => _components = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    public IVector Unit => Normalize();
+    /// <summary>
+    /// Gets the dimension of the vector/the number of components
+    /// </summary>
+    public int Dimensions => Components.Length;
 
-    public IVector Normalize()
+    /// <summary>
+    /// Gets the magnitude/norm of the vector
+    /// </summary>
+    public double Length => NormEuclidean();
+
+    /// <summary>
+    /// Gets the norm squared of the vector. Avoids the square-root operation
+    /// </summary>
+    public double LengthSquared => NormEuclideanSquared();
+
+    /// <summary>
+    /// Unit vector
+    /// </summary>
+    public Vector Unit => Normalize();
+
+    public Vector Normalize()
     {
         double len = Length;
         if (len <= 0)
-            return this;
-        /*throw new Exception("Vector magnitude should be equal to or greater than 1.");*/
+            // return this;
+            throw new Exception("Vector magnitude should be equal to or greater than 1.");
 
         return new Vector(Components.Select(c => (c / len)).ToArray());
     }
 
-    public IVector Reverse() => new Vector(Components.Select(c => -c).ToArray());
+    public Vector Conjugate() => this;
 
-    public IVector Scale(double scalar) =>
+    public Vector Reverse() => new Vector(Components.Select(c => -c).ToArray());
+
+    public Vector Scale(double scalar) =>
         new Vector(Components.Select(c => (scalar * c)).ToArray());
 
-    public double Dot(IVectorN other) => DotProduct(this, other);
+    public double Dot(Vector other) => DotProduct(this, other);
 
-    public IVector TensorProduct(IVectorN other) => TensorProduct(this, other);
+    public Vector TensorProduct(Vector other) => TensorProduct(this, other);
 
+    /// <summary>
+    /// ||x||^2 = |x1|^2 + |x2|^2
+    /// </summary>
     public double NormEuclideanSquared() => Components.Sum(c => c * c);
 
+    /// <summary>
+    /// L2 = Euclidean distance
+    /// Defined as the root of the sum of the squares of the components of the vector.
+    /// ||x||^2 = sqrt( |x1|^2 + |x2|^2 )
+    /// </summary>
     public double NormEuclidean() => Math.Sqrt(NormEuclideanSquared());
 
+    /// <summary>
+    /// L1 = Manhattan distance
+    /// Defined as the sum of the absolute values of the comonents of a given vector.
+    /// ||x|| = |x1| + |x2|
+    /// </summary>
     public double NormManhattan() => Components.Sum(c => Math.Abs(c));
 
-    public double NormMax() => Components.Max();
+    /// <summary>
+    /// L_infinity/Max Norm. Defined as the absolute value of the largest component of the vector
+    /// </summary>
+    // public double NormMax() => Components.Max();
 
-    public double AngleBetween(IVectorN other) => AngleBetween(this, other);
+    public double AngleBetween(Vector other) => AngleBetween(this, other);
 
-    public IVector Rotate(double radians) => throw new NotImplementedException();
+    public Vector Rotate(double radians) => throw new NotImplementedException();
 
     // STATIC METHODS
 
@@ -96,7 +130,7 @@ public sealed class Vector : IVectorN
     /// Creates a composite quantum mechanical system.
     /// The state space of a composite physical system us the tensor product of the state spaces of the component physical system.
     /// </summary>
-    public static Vector TensorProduct(IVectorN a, IVectorN b)
+    public static Vector TensorProduct(Vector a, Vector b)
     {
         int dim = a.Dimensions * b.Dimensions;
         Vector result = new(dim);
@@ -114,10 +148,10 @@ public sealed class Vector : IVectorN
         return result;
     }
 
-    public static double AngleBetween(IVectorN a, IVectorN b) =>
+    public static double AngleBetween(Vector a, Vector b) =>
         Math.Acos(DotProduct(a, b) / (a.Length * b.Length));
 
-    public static Vector Addition(IVectorN a, IVectorN b)
+    public static Vector Addition(Vector a, Vector b)
     {
         if (a.Dimensions != b.Dimensions)
             throw new ArgumentException(
@@ -127,7 +161,7 @@ public sealed class Vector : IVectorN
         return new Vector(a.Components.Zip(b.Components, (c1, c2) => c1 + c2).ToArray());
     }
 
-    public static Vector Subtraction(IVectorN a, IVectorN b)
+    public static Vector Subtraction(Vector a, Vector b)
     {
         if (a.Dimensions != b.Dimensions)
             throw new ArgumentException(
@@ -137,7 +171,7 @@ public sealed class Vector : IVectorN
         return new Vector(a.Components.Zip(b.Components, (c1, c2) => c1 - c2).ToArray());
     }
 
-    public static double DotProduct(IVectorN a, IVectorN b)
+    public static double DotProduct(Vector a, Vector b)
     {
         if (a.Dimensions != b.Dimensions)
             throw new ArgumentException(
@@ -152,9 +186,10 @@ public sealed class Vector : IVectorN
 
     public static Vector operator -(Vector a, Vector b) => Subtraction(a, b);
 
-    public static Vector operator +(Vector a) => new Vector(a);
+    public static Vector operator +(Vector a) => a;
 
-    public static Vector operator -(Vector a) => new Vector(a.Components.Select(c => -c).ToArray());
+    public static Vector operator -(Vector a) =>
+        new Vector(a.Components.Select(c => -c).ToArray());
 
     public static Vector operator *(double scalar, Vector a) =>
         new Vector(a.Components.Select(c => (scalar * c)).ToArray());

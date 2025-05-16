@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DB92D9BF-0B38-45C9-AF38-6493B1D4DFEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib", "Lib\Lib.csproj", "{6E08E5D8-A587-4D9E-AC1F-D2AAF96E02DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeno.Core", "src\Core\Zeno.Core.csproj", "{8965E248-2BCA-420C-A151-BF5074B25407}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{8F136875-49FA-4BC2-B0F6-AEEA82926885}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeno.Tests", "test\Zeno.Tests.csproj", "{0962C7E6-C640-46F7-AD54-780B0B2F6657}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeno.Quantum", "src\Quantum\Zeno.Quantum.csproj", "{775642A2-7369-4BDC-BC01-D338A3360094}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantumSimulator", "Applications\QuantumSimulator\QuantumSimulator.csproj", "{68B31548-8B3C-4B2B-A722-441CF57573CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,21 +18,16 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8965E248-2BCA-420C-A151-BF5074B25407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8965E248-2BCA-420C-A151-BF5074B25407}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8965E248-2BCA-420C-A151-BF5074B25407}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8965E248-2BCA-420C-A151-BF5074B25407}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0962C7E6-C640-46F7-AD54-780B0B2F6657}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0962C7E6-C640-46F7-AD54-780B0B2F6657}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0962C7E6-C640-46F7-AD54-780B0B2F6657}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0962C7E6-C640-46F7-AD54-780B0B2F6657}.Release|Any CPU.Build.0 = Release|Any CPU
-		{775642A2-7369-4BDC-BC01-D338A3360094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{775642A2-7369-4BDC-BC01-D338A3360094}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{775642A2-7369-4BDC-BC01-D338A3360094}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{775642A2-7369-4BDC-BC01-D338A3360094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E08E5D8-A587-4D9E-AC1F-D2AAF96E02DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E08E5D8-A587-4D9E-AC1F-D2AAF96E02DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E08E5D8-A587-4D9E-AC1F-D2AAF96E02DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E08E5D8-A587-4D9E-AC1F-D2AAF96E02DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68B31548-8B3C-4B2B-A722-441CF57573CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68B31548-8B3C-4B2B-A722-441CF57573CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68B31548-8B3C-4B2B-A722-441CF57573CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68B31548-8B3C-4B2B-A722-441CF57573CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8965E248-2BCA-420C-A151-BF5074B25407} = {DB92D9BF-0B38-45C9-AF38-6493B1D4DFEA}
-		{775642A2-7369-4BDC-BC01-D338A3360094} = {DB92D9BF-0B38-45C9-AF38-6493B1D4DFEA}
+		{68B31548-8B3C-4B2B-A722-441CF57573CF} = {8F136875-49FA-4BC2-B0F6-AEEA82926885}
 	EndGlobalSection
 EndGlobal

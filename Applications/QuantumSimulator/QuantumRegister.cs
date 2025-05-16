@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace Zeno.Quantum;
+namespace QuantumSimulator;
 
 public class QuantumRegister
 {
@@ -13,5 +13,15 @@ public class QuantumRegister
         NumQubits = numQubits;
         Amplitudes = new Complex[(int)Math.Pow(2, numQubits)];
         Amplitudes[0] = 1; // initialize |0> state
+    }
+
+    public void ApplyGate()
+    {
+
+    }
+
+    public void Measure()
+    {
+
     }
 }
