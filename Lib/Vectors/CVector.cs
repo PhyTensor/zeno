@@ -2,6 +2,9 @@ using System.Numerics;
 
 namespace Lib.Vectors;
 
+/// <summary>
+/// n-dimensional (complex-valued) Vector
+/// </summary>
 public sealed class CVector
 {
     private Complex[] _components;
@@ -47,12 +50,18 @@ public sealed class CVector
         }
     }
 
+    /// <summary>
+    /// Gets the Components of the vector
+    /// </summary>
     public Complex[] Components
     {
         get => _components;
         set => _components = value ?? throw new ArgumentNullException(nameof(value));
     }
 
+    /// <summary>
+    /// Gets the dimension of the vector/the number of components
+    /// </summary>
     public int Dimensions => Components.Length;
 
     /// <summary>
@@ -60,8 +69,14 @@ public sealed class CVector
     /// </summary>
     public double Length => NormEuclidean();
 
+    /// <summary>
+    /// Gets the norm squared of the vector. Avoids the square-root operation
+    /// </summary>
     public double LengthSquared => NormEuclideanSquared();
 
+    /// <summary>
+    /// Unit vector
+    /// </summary>
     public CVector Unit => Normalize();
 
     public CVector Normalize()
@@ -73,9 +88,11 @@ public sealed class CVector
         return new CVector(Components.Select(c => (Complex.Multiply(1 / len, c))).ToArray());
     }
 
-    public CVector Conjugate() => new CVector(Components.Select(c => Complex.Conjugate(c)).ToArray());
+    public CVector Conjugate() =>
+        new CVector(Components.Select(c => Complex.Conjugate(c)).ToArray());
 
-    public CVector Reverse() => new CVector(Components.Select(c => Complex.Multiply(-1, c)).ToArray());
+    public CVector Reverse() =>
+        new CVector(Components.Select(c => Complex.Multiply(-1, c)).ToArray());
 
     public CVector Scale(double scalar) =>
         new CVector(Components.Select(c => Complex.Multiply(scalar, c)).ToArray());
@@ -84,12 +101,29 @@ public sealed class CVector
 
     public CVector TensorProduct(CVector other) => TensorProduct(this, other);
 
-    public double NormEuclideanSquared() => Components.Sum(c => Math.Pow(Complex.Abs(c), 2));
+    /// <summary>
+    /// ||x||^2 = |x1|^2 + |x2|^2
+    /// </summary>
+    public double NormEuclideanSquared() =>
+        Components.Sum(c => Math.Pow(Complex.Abs(c), 2));
 
+    /// <summary>
+    /// L2 = Euclidean distance
+    /// Defined as the root of the sum of the squares of the components of the vector.
+    /// ||x||^2 = sqrt( |x1|^2 + |x2|^2 )
+    /// </summary>
     public double NormEuclidean() => Math.Sqrt(NormEuclideanSquared());
 
+    /// <summary>
+    /// L1 = Manhattan distance
+    /// Defined as the sum of the absolute values of the comonents of a given vector.
+    /// ||x|| = |x1| + |x2|
+    /// </summary>
     public double NormManhattan() => Components.Sum(c => Complex.Abs(c));
 
+    /// <summary>
+    /// L_infinity/Max Norm. Defined as the absolute value of the largest component of the vector
+    /// </summary>
     // public double NormMax() => Components.Max();
 
     public double AngleBetween(CVector other) => AngleBetween(this, other);

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Lib.Vectors;
 
 namespace Lib.Matrices;
 
@@ -270,5 +271,25 @@ public class CMatrix
                     result[i, j] += Complex.Multiply(a[i, k], b[k, j]);
 
         return result;
+    }
+
+    public static CVector operator *(CMatrix matrix, CVector vector)
+    {
+        if (matrix.Cols != vector.Dimensions)
+            throw new ArgumentException("Matrix columns must match vector dimenions!");
+
+        Complex[] result = new Complex[vector.Dimensions];
+
+        for (int i = 0; i < matrix.Rows; i++)
+        {
+            for (int j = 0; j < matrix.Cols; j++)
+            {
+                // result[i] += matrix[i, j] * vector[j];
+                Complex product = Complex.Multiply(vector[j], matrix[i, j]);
+                result[i] = Complex.Add(result[i], product);
+            }
+        }
+
+        return new CVector(result);
     }
 }

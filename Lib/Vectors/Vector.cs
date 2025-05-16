@@ -1,7 +1,7 @@
 namespace Lib.Vectors;
 
 /// <summary>
-/// A class that represents an n-dimensional Vector
+/// n-dimensional (real-valued) Vector
 /// </summary>
 public sealed class Vector
 {
@@ -46,18 +46,33 @@ public sealed class Vector
         }
     }
 
+    /// <summary>
+    /// Gets the Components of the vector
+    /// </summary>
     public double[] Components
     {
         get => _components;
         set => _components = value ?? throw new ArgumentNullException(nameof(value));
     }
 
+    /// <summary>
+    /// Gets the dimension of the vector/the number of components
+    /// </summary>
     public int Dimensions => Components.Length;
 
+    /// <summary>
+    /// Gets the magnitude/norm of the vector
+    /// </summary>
     public double Length => NormEuclidean();
 
+    /// <summary>
+    /// Gets the norm squared of the vector. Avoids the square-root operation
+    /// </summary>
     public double LengthSquared => NormEuclideanSquared();
 
+    /// <summary>
+    /// Unit vector
+    /// </summary>
     public Vector Unit => Normalize();
 
     public Vector Normalize()
@@ -81,12 +96,28 @@ public sealed class Vector
 
     public Vector TensorProduct(Vector other) => TensorProduct(this, other);
 
+    /// <summary>
+    /// ||x||^2 = |x1|^2 + |x2|^2
+    /// </summary>
     public double NormEuclideanSquared() => Components.Sum(c => c * c);
 
+    /// <summary>
+    /// L2 = Euclidean distance
+    /// Defined as the root of the sum of the squares of the components of the vector.
+    /// ||x||^2 = sqrt( |x1|^2 + |x2|^2 )
+    /// </summary>
     public double NormEuclidean() => Math.Sqrt(NormEuclideanSquared());
 
+    /// <summary>
+    /// L1 = Manhattan distance
+    /// Defined as the sum of the absolute values of the comonents of a given vector.
+    /// ||x|| = |x1| + |x2|
+    /// </summary>
     public double NormManhattan() => Components.Sum(c => Math.Abs(c));
 
+    /// <summary>
+    /// L_infinity/Max Norm. Defined as the absolute value of the largest component of the vector
+    /// </summary>
     // public double NormMax() => Components.Max();
 
     public double AngleBetween(Vector other) => AngleBetween(this, other);
